@@ -1,51 +1,36 @@
+
 // Global variables
-let speed = 119; // Default 5 seconds
+let speed = 0;
 let app;
 
-// Initialize speed slider
+// Generate a random focus duration between 21:26 and 28:54
+function generateRandomSpeed() {
+    const minSeconds = 1 * 60 + 47; // 107 seconds
+    const maxSeconds = 3 * 60 + 28; // 208 seconds
+
+    return Math.floor(
+        Math.random() * (maxSeconds - minSeconds + 1)
+    ) + minSeconds;
+}
+
+// Initialise speed
+speed = generateRandomSpeed();
+
+// Initialise display
 document.addEventListener('DOMContentLoaded', function() {
-    const speedSlider = document.getElementById("speed_slider");
     const speedDisplay = document.getElementById("speed_display");
 
-    let randomDuration = null;
-
-    speedSlider.value = 0;
-    updateSpeedDisplay(0);
-
-    speedSlider.oninput = function() {
-        const value = parseFloat(this.value);
-        updateSpeedDisplay(value);
-    };
-
-    function updateSpeedDisplay(value) {
-        if (value === 0) {
-            randomDuration = null;
-            speedDisplay.textContent = "2 minutes";
-        } else {
-            if (randomDuration === null) {
-                const minSeconds = 21 * 60 + 26;
-                const maxSeconds = 28 * 60 + 54;
-
-                randomDuration = Math.floor(
-                    Math.random() * (maxSeconds - minSeconds + 1)
-                ) + minSeconds;
-            }
-
-            speed = randomDuration;
-
-            if (value < 1) {
-                const minutes = Math.round(speed / 60);
-                speedDisplay.textContent = `${minutes} minutes`;
-            } else {
-                speedDisplay.textContent = `${value} hours`;
-            }
-        }
+    if (speedDisplay) {
+        speedDisplay.textContent = secondsToString(speed);
     }
-});
 
-// Settings button functionality
-document.getElementById("settings_button").addEventListener("click", () => {
-    document.getElementById("settings").showModal();
+    const settingsButton = document.getElementById("settings_button");
+
+    if (settingsButton) {
+        settingsButton.addEventListener("click", () => {
+            document.getElementById("settings").showModal();
+        });
+    }
 });
 
 // Close settings on Escape key
@@ -60,8 +45,10 @@ function secondsToString(seconds) {
     if (seconds < 60) {
         return `${Math.round(seconds)} seconds`;
     } else if (seconds < 3600) {
-        const minutes = Math.round(seconds / 60);
-        return `${minutes} minutes`;
+        const minutes = Math.floor(seconds / 60);
+        const remainingSeconds = seconds % 60;
+
+        return `${minutes} minutes ${remainingSeconds} seconds`;
     } else if (seconds < 86400) {
         const hours = Math.round(seconds / 3600);
         return `${hours} hours`;
