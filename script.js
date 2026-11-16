@@ -1,5 +1,5 @@
 // Global variables
-let speed = 5; // Default 5 seconds
+let speed = 119; // Default 5 seconds
 let app;
 
 // Initialize speed slider
