@@ -20,5 +20,6 @@ Website: [New Website](https://z3phydev.github.io/FLNHH/)
 - This project is for **educational purposes only**.  
 - I am **not responsible** for any misuse, issues, or consequences of using this project.  
 - Use at your own risk.  
+-This was made by z3phydev, I only made it a github page.
 
 ---
